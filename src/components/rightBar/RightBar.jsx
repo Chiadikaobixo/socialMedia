@@ -3,6 +3,8 @@ import { Users } from '../../data'
 import './rightBar.css'
 
 const RightBar = ({ profile }) => {
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER
+
     const HomeRightBar = () => {
         return (
             <div>
@@ -44,15 +46,15 @@ const RightBar = ({ profile }) => {
                 <h4 className='rightbarTitle'>User friends</h4>
                 <div className='rightbarFollowings'>
                     <div className='rightbarFollowing'>
-                        <img className='rightbarFollowingImg' src='assets/person/IMG-1.jpg' alt='' />
+                        <img className='rightbarFollowingImg' src={`${PF}person/IMG-1.jpg`} alt='' />
                         <span className='rightbarFollowingName'>prime</span>
                     </div>
                     <div className='rightbarFollowing'>
-                        <img className='rightbarFollowingImg' src='assets/person/IMG-2.jpg' alt='' />
+                        <img className='rightbarFollowingImg' src={`${PF}person/IMG-2.jpg`} alt='' />
                         <span className='rightbarFollowingName'>spunky</span>
                     </div>
                     <div className='rightbarFollowing'>
-                        <img className='rightbarFollowingImg' src='assets/person/IMG-3.jpg' alt='' />
+                        <img className='rightbarFollowingImg' src={`${PF}person/IMG-3.jpg`} alt='' />
                         <span className='rightbarFollowingName'>franchise</span>
                     </div>
                 </div>

@@ -1,11 +1,13 @@
+import React from 'react'
 import './topBar.css'
 import { Search, Person, Chat, Notifications } from '@mui/icons-material'
 
 const TopBar = () => {
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER
     return (
         <div className='topbarContainer'>
             <div className='topbarLeft'>
-                <span className='logo'>SocialMedia</span>
+                    <span className='logo'>SocialMedia</span>
             </div>
             <div className='topbarCenter'>
                 <div className='searchbar'>
@@ -32,7 +34,7 @@ const TopBar = () => {
                         <span className='topbarIconBadge'>1</span>
                     </div>
                 </div>
-                <img src='assets/person/IMG-1.jpg' alt='profilePicture' className='topbarImg'  />
+                <img src={`${PF}person/IMG-1.jpg`} alt='profilePicture' className='topbarImg' />
             </div>
         </div>
     )
