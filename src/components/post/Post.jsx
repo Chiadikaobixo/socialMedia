@@ -1,16 +1,27 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import { MoreVert } from '@mui/icons-material'
-import { useState } from 'react'
-import { Users } from '../../data'
+import axios from 'axios'
 import './post.css'
 
 const Post = ({ post }) => {
     const [like, setLike] = useState(post.like)
     const [isLiked, setIsLike] = useState(false)
+    const [user, setUser] = useState({})
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const res = await axios.get(`/${post.userId}`)
+            setUser(res.data)
+
+        }
+        fetchUser()
+    }, [post.userId])
+
     const likeHandler = () => {
-        setLike(isLiked? like +1 : like -1)
+        setLike(isLiked ? like + 1 : like - 1)
         setIsLike(!isLiked)
     }
     return (
@@ -20,11 +31,11 @@ const Post = ({ post }) => {
                     <div className='postTopLeft'>
                         <img
                             className='postProfileImg'
-                            src={Users.filter((user) => user.id === post.userId)[0].profilePicture}
+                            src={user.profilePicture}
                             alt=''
                         />
                         <span className='postUsername'>
-                            {Users.filter((user) => user.id === post.userId)[0].username}
+                            {user.username}
                         </span>
                         <span className='postDate'>{post.date}</span>
                     </div>
@@ -34,7 +45,7 @@ const Post = ({ post }) => {
                 </div>
                 <div className='postCenter'>
                     <span className='postText'>{post.desc}</span>
-                    <img className='postImg' src={PF+post.photo} alt='' />
+                    <img className='postImg' src={PF + post.photo} alt='' />
                 </div>
                 <div className='postBottom'>
                     <div className='postBottomLeft'>
