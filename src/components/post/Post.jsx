@@ -5,7 +5,7 @@ import axios from 'axios'
 import './post.css'
 
 const Post = ({ post }) => {
-    const [like, setLike] = useState(post.like)
+    const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLike] = useState(false)
     const [user, setUser] = useState({})
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
@@ -14,14 +14,15 @@ const Post = ({ post }) => {
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`/${post.userId}`)
-            setUser(res.data)
+            const mypost = Object.values(res.data)[1]
+            setUser(mypost)
 
         }
         fetchUser()
     }, [post.userId])
 
     const likeHandler = () => {
-        setLike(isLiked ? like + 1 : like - 1)
+        setLike(isLiked ? like - 1 : like + 1)
         setIsLike(!isLiked)
     }
     return (
@@ -31,7 +32,7 @@ const Post = ({ post }) => {
                     <div className='postTopLeft'>
                         <img
                             className='postProfileImg'
-                            src={user.profilePicture}
+                            src={user.profilePicture || PF + "person/noAvatar.png"}
                             alt=''
                         />
                         <span className='postUsername'>
@@ -45,7 +46,7 @@ const Post = ({ post }) => {
                 </div>
                 <div className='postCenter'>
                     <span className='postText'>{post.desc}</span>
-                    <img className='postImg' src={PF + post.photo} alt='' />
+                    <img className='postImg' src={PF + `post/${post.img}`} alt='' />
                 </div>
                 <div className='postBottom'>
                     <div className='postBottomLeft'>
