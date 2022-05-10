@@ -1,7 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { MoreVert } from '@mui/icons-material'
+import moment from "moment";
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import './post.css'
 
 const Post = ({ post }) => {
@@ -30,15 +32,17 @@ const Post = ({ post }) => {
             <div className='postWrapper'>
                 <div className='postTop'>
                     <div className='postTopLeft'>
-                        <img
-                            className='postProfileImg'
-                            src={user.profilePicture || PF + "person/noAvatar.png"}
-                            alt=''
-                        />
+                        <Link to={`profile/${user.username}`}>
+                            <img
+                                className='postProfileImg'
+                                src={user.profilePicture || PF + "person/noAvatar.png"}
+                                alt=''
+                            />
+                        </Link>
                         <span className='postUsername'>
                             {user.username}
                         </span>
-                        <span className='postDate'>{post.date}</span>
+                        <span className='postDate'>{moment(post.createdAt).format('HH:mm a,  MMMM Do, YYYY')}</span>
                     </div>
                     <div className='postTopRight'>
                         <MoreVert />
