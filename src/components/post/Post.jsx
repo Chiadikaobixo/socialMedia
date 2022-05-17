@@ -1,27 +1,38 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState, useEffect } from 'react'
 import { MoreVert } from '@mui/icons-material'
 import moment from "moment";
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import './post.css'
+import { AuthContext } from '../../context/authContext';
 
 const Post = ({ post }) => {
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLike] = useState(false)
     const [user, setUser] = useState({})
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
+    const { user: { data: { login: { _id } } } } = useContext(AuthContext)
+
+    useEffect(() => {
+        setIsLike(post.likes.includes(_id))
+    }, [post.likes, _id])
 
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`http://localhost:8080/?userId=${post.userId}`)
-            const mypost = Object.values(res.data)[1]
-            setUser(mypost)
+            const { data: { data } } = res
+            setUser(data)
         }
         fetchUser()
     }, [post.userId])
 
-    const likeHandler = () => {
+    const likeHandler = async () => {
+        try {
+            await axios.put(`http://localhost:8080/posts/${post._id}/like`, { userId: _id })
+        } catch (error) {
+
+        }
         setLike(isLiked ? like - 1 : like + 1)
         setIsLike(!isLiked)
     }
@@ -33,7 +44,7 @@ const Post = ({ post }) => {
                         <Link to={`profile/${user.username}`}>
                             <img
                                 className='postProfileImg'
-                                src={user.profilePicture || PF + "person/noAvatar.png"}
+                                src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"}
                                 alt=''
                             />
                         </Link>
