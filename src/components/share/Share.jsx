@@ -1,22 +1,61 @@
 import { PermMedia, Label, Room, EmojiEmotions } from '@mui/icons-material'
+import { useContext, useRef, useState } from 'react'
+import { AuthContext } from '../../context/authContext'
+import axios from 'axios'
 import './share.css'
 
 const Share = () => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
+    const { user: { data: { login } } } = useContext(AuthContext)
+    const user = login
+    const desc = useRef()
+    const [file, setFile] = useState(null)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const newPost = {
+            userId: user._id,
+            desc: desc.current.value
+        }
+        try {
+            await axios.post("http://localhost:8080/posts", newPost)
+        } catch (error) {
+
+        }
+    }
+
+    const handleChange = (e) => {
+        setFile(e.target.file)
+    }
     return (
         <div className='share'>
             <div className='shareWrapper'>
                 <div className='shareTop'>
-                    <img className='shareProfileImg' src={`${PF}person/IMG-1.jpg`} alt='' />
-                    <input placeholder='share your thought with' className='shareInput' />
+                    <img className='shareProfileImg'
+                        src={user.profilePicture ?
+                            PF + user.profilePicture :
+                            PF + 'person/IMG-1.jpg'}
+                        alt='' />
+                    <input
+                        placeholder={user.username + ', feel free to share your thought with us.'}
+                        className='shareInput'
+                        ref={desc}
+                    />
                 </div>
                 <hr className='shareHr' />
                 <div className='shareBottom'>
-                    <div className='shareOptions'>
-                        <div className='shareOption'>
+                    <form className='shareOptions' onSubmit={handleSubmit} >
+                        <label htmlFor='file' className='shareOption'>
                             <PermMedia htmlColor='tomato' className='shareIcon' />
                             <span className='shareOptionText'>Photo/Video</span>
-                        </div>
+                            <input
+                                style={{ display: 'none' }}
+                                type='file'
+                                id='file'
+                                accept='.png, .jpeg, .jpg'
+                                onChange={handleChange}
+                            />
+                        </label>
                         <div className='shareOption'>
                             <Label htmlColor='blue' className='shareIcon' />
                             <span className='shareOptionText'>Tag</span>
@@ -29,8 +68,8 @@ const Share = () => {
                             <EmojiEmotions htmlColor='darkblue' className='shareIcon' />
                             <span className='shareOptionText'>Feelings</span>
                         </div>
-                    </div>
-                    <button className='shareButton'>Share</button>
+                        <button className='shareButton' type='submit'>Share</button>
+                    </form>
                 </div>
             </div>
         </div>
