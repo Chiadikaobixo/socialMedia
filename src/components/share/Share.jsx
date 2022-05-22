@@ -1,8 +1,11 @@
-import { PermMedia, Label, Room, EmojiEmotions } from '@mui/icons-material'
 import { useContext, useRef, useState } from 'react'
+import { PermMedia, Label, Room, EmojiEmotions } from '@mui/icons-material'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import app from '../../firebase'
 import { AuthContext } from '../../context/authContext'
 import axios from 'axios'
 import './share.css'
+const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
 const Share = () => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
@@ -11,22 +14,56 @@ const Share = () => {
     const desc = useRef()
     const [file, setFile] = useState(null)
 
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         const newPost = {
             userId: user._id,
             desc: desc.current.value
         }
-        try {
-            await axios.post("http://localhost:8080/posts", newPost)
-        } catch (error) {
 
+        if (file) {
+            const data = new FormData();
+            const fileName = Date.now() + file.name;
+            data.append("name", fileName);
+            data.append("file", file);
+            const storage = getStorage(app)
+            const storageRef = ref(storage, fileName);
+
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on('state_changed', (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                }
+            },
+                (error) => { }, () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                        const product = downloadURL
+
+                        newPost.img = product
+                        console.log(newPost)
+
+                        try {
+                            await axios.post("http://localhost:8080/avatar", data);
+                            await axios.post("http://localhost:8080/posts", newPost)
+                        } catch (err) {
+
+                        }
+                    });
+                }
+            )
+        }else {
+            await axios.post("http://localhost:8080/posts", newPost)
         }
     }
 
-    const handleChange = (e) => {
-        setFile(e.target.file)
-    }
     return (
         <div className='share'>
             <div className='shareWrapper'>
@@ -43,8 +80,8 @@ const Share = () => {
                     />
                 </div>
                 <hr className='shareHr' />
-                <div className='shareBottom'>
-                    <form className='shareOptions' onSubmit={handleSubmit} >
+                <form className='shareBottom' onSubmit={handleSubmit} >
+                    <div className='shareOptions'>
                         <label htmlFor='file' className='shareOption'>
                             <PermMedia htmlColor='tomato' className='shareIcon' />
                             <span className='shareOptionText'>Photo/Video</span>
@@ -53,7 +90,7 @@ const Share = () => {
                                 type='file'
                                 id='file'
                                 accept='.png, .jpeg, .jpg'
-                                onChange={handleChange}
+                                onChange={(e) => setFile(e.target.files[0])}
                             />
                         </label>
                         <div className='shareOption'>
@@ -68,9 +105,9 @@ const Share = () => {
                             <EmojiEmotions htmlColor='darkblue' className='shareIcon' />
                             <span className='shareOptionText'>Feelings</span>
                         </div>
-                        <button className='shareButton' type='submit'>Share</button>
-                    </form>
-                </div>
+                    </div>
+                    <button className='shareButton' type='submit'>Share</button>
+                </form>
             </div>
         </div>
     )

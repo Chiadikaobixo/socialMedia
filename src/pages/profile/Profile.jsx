@@ -37,7 +37,7 @@ const Profile = () => {
                             />
                             <img
                                 className="profileUserImg"
-                                src={user.profilePicture? PF + user.profilePicture : `${PF}person/noProfilePicture.jpg`}
+                                src={user.profilePicture?  user.profilePicture : "https://www.linkpicture.com/q/store-2.jpg"}
                                 alt=""
                             />
                         </div>
