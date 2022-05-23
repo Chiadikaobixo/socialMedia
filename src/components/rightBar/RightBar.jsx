@@ -1,10 +1,29 @@
 import Online from '../online/Online'
 import { Users } from '../../data'
 import './rightBar.css'
+import { useContext, useEffect, useState } from 'react'
+import axios from 'axios'
+import { AuthContext } from '../../context/authContext'
+import { Link } from 'react-router-dom'
 
 const RightBar = ({ user }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
+    const [friends, setFriends] = useState([])
+    const { user: { data: { login: { _id } } } } = useContext(AuthContext)
+    
 
+    useEffect(() => {
+        const getFriends = async () => {
+            try {
+                const friendList = await axios.get(`http://localhost:8080/friends/${_id}`)
+                const { data } = friendList.data
+                setFriends(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getFriends()
+    }, [_id])
     const HomeRightBar = () => {
         return (
             <div>
@@ -51,18 +70,18 @@ const RightBar = ({ user }) => {
                 </div>
                 <h4 className='rightbarTitle'>User friends</h4>
                 <div className='rightbarFollowings'>
-                    <div className='rightbarFollowing'>
-                        <img className='rightbarFollowingImg' src={`${PF}person/IMG-1.jpg`} alt='' />
-                        <span className='rightbarFollowingName'>prime</span>
-                    </div>
-                    <div className='rightbarFollowing'>
-                        <img className='rightbarFollowingImg' src={`${PF}person/IMG-2.jpg`} alt='' />
-                        <span className='rightbarFollowingName'>spunky</span>
-                    </div>
-                    <div className='rightbarFollowing'>
-                        <img className='rightbarFollowingImg' src={`${PF}person/IMG-3.jpg`} alt='' />
-                        <span className='rightbarFollowingName'>franchise</span>
-                    </div>
+                    {friends.map((friend) => (
+                        <Link to={"/profile/"+ friend.username} key={friend._id}>
+                            <div className='rightbarFollowing'>
+                                <img
+                                    className='rightbarFollowingImg'
+                                    src={friend.profilePicture ? friend.profilePicture : "https://www.linkpicture.com/q/store-2.jpg"}
+                                    alt=''
+                                />
+                                <span className='rightbarFollowingName'>{friend.username}</span>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             </div>
         )

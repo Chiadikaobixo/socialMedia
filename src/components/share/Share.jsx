@@ -46,13 +46,12 @@ const Share = () => {
                 (error) => { }, () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
                         const product = downloadURL
-
                         newPost.img = product
-                        console.log(newPost)
 
                         try {
                             await axios.post("http://localhost:8080/avatar", data);
                             await axios.post("http://localhost:8080/posts", newPost)
+                            window.location.reload()
                         } catch (err) {
 
                         }
@@ -61,6 +60,7 @@ const Share = () => {
             )
         }else {
             await axios.post("http://localhost:8080/posts", newPost)
+            window.location.reload()
         }
     }
 
