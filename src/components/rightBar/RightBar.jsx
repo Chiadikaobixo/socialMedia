@@ -5,12 +5,15 @@ import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { AuthContext } from '../../context/authContext'
 import { Link } from 'react-router-dom'
+import { Add, Remove } from '@mui/icons-material'
 
 const RightBar = ({ user }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
     const [friends, setFriends] = useState([])
-    const { user: { data: { login: { _id } } } } = useContext(AuthContext)
-    
+    const { user: { data: { login: { _id, followings, username: loggedinUsername } } } } = useContext(AuthContext)
+    const [followed, setFollowed] = useState(false)
+    const { dispatch } = useContext(AuthContext)
+
 
     useEffect(() => {
         const getFriends = async () => {
@@ -23,14 +26,34 @@ const RightBar = ({ user }) => {
             }
         }
         getFriends()
-    }, [_id])
+    }, [])
+
+    useEffect(() => {
+        setFollowed(followings.includes(user?._id))
+    })
+
+    const handleClick = async () => {
+        try {
+            if (followed) {
+                await axios.put(`http://localhost:8080/users/${user._id}/unfollow`, { userId: _id })
+                dispatch({ type: 'FOLLOW', payload: user._id })
+            } else {
+                await axios.put(`http://localhost:8080/users/${user._id}/follow`, { userId: _id })
+                dispatch({ type: 'UNFOLLOW', payload: user._id })
+            }
+            setFollowed(!followed)
+        } catch (error) {
+
+        }
+    }
+
     const HomeRightBar = () => {
         return (
             <div>
                 <div className='birthdayContainer'>
                     <img className='birthdayImg' src='assets/gift.png' alt='' />
                     <span className='birthdayText'>
-                        <b>Chiadikaobi</b> and <b>3 other friends</b>  have a birthdau today
+                        <b>Chiadikaobi</b> and <b>3 other friends</b>  have a birthday today
                     </span>
                 </div>
                 <img className='rightbarAd' src='assets/advert.jpg' alt='' />
@@ -47,6 +70,12 @@ const RightBar = ({ user }) => {
     const ProfileRightBar = () => {
         return (
             <div>
+                {user.username !== loggedinUsername && (
+                    <button className='rightbarFollowButton' onClick={handleClick}>
+                        {followed ? "Unfollow" : "Follow"}
+                        {followed ? <Remove /> : <Add />}
+                    </button>
+                )}
                 <h4 className='rightbarTitle'>User Information</h4>
                 <div className="rightbarInfo">
                     <div className="rightbarInfoItem">
@@ -71,7 +100,7 @@ const RightBar = ({ user }) => {
                 <h4 className='rightbarTitle'>User friends</h4>
                 <div className='rightbarFollowings'>
                     {friends.map((friend) => (
-                        <Link to={"/profile/"+ friend.username} key={friend._id}>
+                        <Link to={"/profile/" + friend.username} key={friend._id} style={{ textDecoration: 'none' }}>
                             <div className='rightbarFollowing'>
                                 <img
                                     className='rightbarFollowingImg'

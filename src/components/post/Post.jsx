@@ -41,7 +41,7 @@ const Post = ({ post }) => {
             <div className='postWrapper'>
                 <div className='postTop'>
                     <div className='postTopLeft'>
-                        <Link to={`profile/${user.username}`}>
+                        <Link to={`/profile/${user.username}`}>
                             <img
                                 className='postProfileImg'
                                 src={user.profilePicture ?  user.profilePicture : "https://www.linkpicture.com/q/store-2.jpg"}
