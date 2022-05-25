@@ -27,10 +27,10 @@ const RightBar = ({ user }) => {
         }
         getFriends()
     }, [])
-
+    
     useEffect(() => {
         setFollowed(followings.includes(user?._id))
-    })
+    },[followings, user?._id])
 
     const handleClick = async () => {
         try {
@@ -41,10 +41,9 @@ const RightBar = ({ user }) => {
                 await axios.put(`http://localhost:8080/users/${user._id}/follow`, { userId: _id })
                 dispatch({ type: 'UNFOLLOW', payload: user._id })
             }
-            setFollowed(!followed)
         } catch (error) {
-
         }
+        setFollowed(!followed)
     }
 
     const HomeRightBar = () => {
