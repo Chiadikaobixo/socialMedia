@@ -1,11 +1,10 @@
 import { useContext, useRef, useState } from 'react'
-import { PermMedia, Label, Room, EmojiEmotions } from '@mui/icons-material'
+import { PermMedia, Label, Room, EmojiEmotions, Cancel } from '@mui/icons-material'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import app from '../../firebase'
 import { AuthContext } from '../../context/authContext'
 import axios from 'axios'
 import './share.css'
-const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
 const Share = () => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
@@ -58,7 +57,7 @@ const Share = () => {
                     });
                 }
             )
-        }else {
+        } else {
             await axios.post("http://localhost:8080/posts", newPost)
             window.location.reload()
         }
@@ -71,7 +70,7 @@ const Share = () => {
                     <img className='shareProfileImg'
                         src={user.profilePicture ?
                             PF + user.profilePicture :
-                            PF + 'person/IMG-1.jpg'}
+                            PF + 'person/noProfilePicture.jpg'}
                         alt='' />
                     <input
                         placeholder={user.username + ', feel free to share your thought with us.'}
@@ -80,6 +79,12 @@ const Share = () => {
                     />
                 </div>
                 <hr className='shareHr' />
+                {file && (
+                    <div className='shareImgContainer'>
+                        <img className='shareImg' src={URL.createObjectURL(file)} alt='' />
+                        <Cancel className='shareCancelImg' onClick={() => setFile(null)} />
+                    </div>
+                )}
                 <form className='shareBottom' onSubmit={handleSubmit} >
                     <div className='shareOptions'>
                         <label htmlFor='file' className='shareOption'>

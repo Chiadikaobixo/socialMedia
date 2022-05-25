@@ -44,7 +44,7 @@ const Post = ({ post }) => {
                         <Link to={`/profile/${user.username}`}>
                             <img
                                 className='postProfileImg'
-                                src={user.profilePicture ?  user.profilePicture : "https://www.linkpicture.com/q/store-2.jpg"}
+                                src={user.profilePicture ?  user.profilePicture : PF + 'person/noProfilePicture.jpg'}
                                 alt=''
                             />
                         </Link>

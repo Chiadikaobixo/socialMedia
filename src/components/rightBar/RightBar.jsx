@@ -27,7 +27,7 @@ const RightBar = ({ user }) => {
         }
         getFriends()
     }, [])
-    
+
     useEffect(() => {
         setFollowed(followings.includes(user?._id))
     },[followings, user?._id])
@@ -103,7 +103,7 @@ const RightBar = ({ user }) => {
                             <div className='rightbarFollowing'>
                                 <img
                                     className='rightbarFollowingImg'
-                                    src={friend.profilePicture ? friend.profilePicture : "https://www.linkpicture.com/q/store-2.jpg"}
+                                    src={friend.profilePicture ? friend.profilePicture : PF + 'person/noProfilePicture.jpg'}
                                     alt=''
                                 />
                                 <span className='rightbarFollowingName'>{friend.username}</span>
