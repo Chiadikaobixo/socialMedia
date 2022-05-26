@@ -14,7 +14,7 @@ const RightBar = ({ user }) => {
     const [followed, setFollowed] = useState(false)
     const { dispatch } = useContext(AuthContext)
 
-
+   
     useEffect(() => {
         const getFriends = async () => {
             try {
@@ -27,10 +27,10 @@ const RightBar = ({ user }) => {
         }
         getFriends()
     }, [])
-
+   
     useEffect(() => {
         setFollowed(followings.includes(user?._id))
-    },[followings, user?._id])
+    }, [followings, user?._id])
 
     const handleClick = async () => {
         try {
@@ -46,13 +46,14 @@ const RightBar = ({ user }) => {
         setFollowed(!followed)
     }
 
+
     const HomeRightBar = () => {
         return (
             <div>
                 <div className='birthdayContainer'>
                     <img className='birthdayImg' src='assets/gift.png' alt='' />
                     <span className='birthdayText'>
-                        <b>Chiadikaobi</b> and <b>3 other friends</b>  have a birthday today
+                        <b>Chiadikaobi</b> and <b>3 other friends</b>  have their birthday today
                     </span>
                 </div>
                 <img className='rightbarAd' src='assets/advert.jpg' alt='' />
