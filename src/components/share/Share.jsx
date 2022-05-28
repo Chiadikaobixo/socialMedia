@@ -3,7 +3,7 @@ import { PermMedia, Label, Room, EmojiEmotions, Cancel } from '@mui/icons-materi
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import app from '../../firebase'
 import { AuthContext } from '../../context/authContext'
-import axios from 'axios'
+import { unAuthRequest } from '../../requestMethod'
 import './share.css'
 
 const Share = () => {
@@ -48,8 +48,8 @@ const Share = () => {
                         newPost.img = product
 
                         try {
-                            await axios.post("http://localhost:8080/avatar", data);
-                            await axios.post("http://localhost:8080/posts", newPost)
+                            await unAuthRequest.post("/avatar", data);
+                            await unAuthRequest.post("/posts", newPost)
                             window.location.reload()
                         } catch (err) {
 
@@ -58,7 +58,7 @@ const Share = () => {
                 }
             )
         } else {
-            await axios.post("http://localhost:8080/posts", newPost)
+            await unAuthRequest.post("/posts", newPost)
             window.location.reload()
         }
     }

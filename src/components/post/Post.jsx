@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useState, useEffect } from 'react'
 import { MoreVert } from '@mui/icons-material'
 import moment from "moment";
-import axios from 'axios'
+import {userRequest, unAuthRequest} from '../../requestMethod.js'
 import { Link } from 'react-router-dom'
 import './post.css'
 import { AuthContext } from '../../context/authContext';
@@ -20,7 +20,7 @@ const Post = ({ post }) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`http://localhost:8080/?userId=${post.userId}`)
+            const res = await userRequest.get(`/?userId=${post.userId}`)
             const { data: { data } } = res
             setUser(data)
         }
@@ -29,7 +29,7 @@ const Post = ({ post }) => {
 
     const likeHandler = async () => {
         try {
-            await axios.put(`http://localhost:8080/posts/${post._id}/like`, { userId: _id })
+            await unAuthRequest.put(`/posts/${post._id}/like`, { userId: _id })
         } catch (error) {
 
         }

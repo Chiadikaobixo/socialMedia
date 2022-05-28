@@ -1,7 +1,8 @@
 import React from 'react'
+import moment from 'moment'
 import './message.css'
 
-const Message = ({own}) => {
+const Message = ({message, own}) => {
     return (
         <div className={own? 'message own' : 'message'}>
             <div className='messageTop'>
@@ -10,9 +11,9 @@ const Message = ({own}) => {
                     src='https://www.linkpicture.com/q/IMG-1352.jpg'
                     alt=''
                 />
-                <p className='messageText'>Hello this is a message</p>
+                <p className='messageText'>{message.text}</p>
             </div>
-            <div className='messageBottom'>1 hour ago</div>
+            <div className='messageBottom'>{moment(message.createdAt).format('HH:mm a,  MMMM Do, YYYY')}</div>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import TopBar from "../../components/topBar/TopBar"
 import Feed from "../../components/feed/Feed"
 import RightBar from "../../components/rightBar/RightBar"
 import { useParams } from 'react-router'
-import axios from 'axios'
+import { userRequest } from '../../requestMethod'
 import './profile.css'
 
 const Profile = () => {
@@ -15,7 +15,7 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`http://localhost:8080/?username=${username}`)
+            const res = await userRequest.get(`/?username=${username}`)
             const {data: {data}} = res
             setUser(data)
         }

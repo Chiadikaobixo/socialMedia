@@ -2,10 +2,10 @@ import Online from '../online/Online'
 import { Users } from '../../data'
 import './rightBar.css'
 import { useContext, useEffect, useState } from 'react'
-import axios from 'axios'
 import { AuthContext } from '../../context/authContext'
 import { Link } from 'react-router-dom'
 import { Add, Remove } from '@mui/icons-material'
+import { userRequest } from '../../requestMethod'
 
 const RightBar = ({ user }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
@@ -18,7 +18,7 @@ const RightBar = ({ user }) => {
     useEffect(() => {
         const getFriends = async () => {
             try {
-                const friendList = await axios.get(`http://localhost:8080/friends/${_id}`)
+                const friendList = await userRequest.get(`/friends/${_id}`)
                 const { data } = friendList.data
                 setFriends(data)
             } catch (error) {
@@ -35,16 +35,18 @@ const RightBar = ({ user }) => {
     const handleClick = async () => {
         try {
             if (followed) {
-                await axios.put(`http://localhost:8080/users/${user._id}/unfollow`, { userId: _id })
+                await userRequest.put(`/users/${user._id}/unfollow`, { userId: _id })
                 dispatch({ type: 'FOLLOW', payload: user._id })
             } else {
-                await axios.put(`http://localhost:8080/users/${user._id}/follow`, { userId: _id })
+                await userRequest.put(`/users/${user._id}/follow`, { userId: _id })
                 dispatch({ type: 'UNFOLLOW', payload: user._id })
             }
         } catch (error) {
         }
         setFollowed(!followed)
     }
+
+
 
 
     const HomeRightBar = () => {

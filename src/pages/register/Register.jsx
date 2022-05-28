@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { useContext, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { AuthContext } from '../../context/authContext'
+import { unAuthRequest } from '../../requestMethod'
 import { loginCall } from '../../apiCalls'
 import './register.css'
 
@@ -24,7 +24,7 @@ const Register = () => {
                 password: password.current.value
             }
             try {
-                await axios.post("http://localhost:8080/users/signup", user)
+                await unAuthRequest.post("/users/signup", user)
                 loginCall({ email: email.current.value, password: password.current.value }, dispatch)
                 history.push('/')
             } catch (error) {

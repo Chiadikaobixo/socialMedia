@@ -21,6 +21,7 @@
 .chatBoxWrapper {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .chatBoxTop {
@@ -61,4 +62,13 @@
 .chatOnlineWrapper {
     padding: 10px;
     height: 100%;
+}
+
+.noConversationText{
+    position: absolute;
+    top: 15%;
+    font-size: 40px;
+    color: rgb(205, 197, 197);
+    text-align: center;
+    cursor: default;
 }
