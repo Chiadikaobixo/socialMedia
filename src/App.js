@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { AuthContext } from "./context/authContext";
+import ExploreFriends from "./pages/ExploreFriends/ExploreFriends";
 import Home from "./pages/home/Home"
 import Login from "./pages/login/Login.jsx";
 import Messenger from "./pages/messenger/Messenger";
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/messenger">
           {!user ? <Redirect to="/" /> : <Messenger />}
+        </Route>
+        <Route path="/explore">
+          {!user ? <Redirect to="/" /> : <ExploreFriends /> }
         </Route>
         <Route path="/profile/:username">
           <Profile />

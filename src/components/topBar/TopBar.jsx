@@ -36,7 +36,9 @@ const TopBar = () => {
                         <span className='topbarIconBadge'>1</span>
                     </div>
                     <div className='topbarIconItem'>
-                        <Chat />
+                        <Link to='/messenger' style={{ textDecoration: 'none', color: 'white' }}>
+                            <Chat />
+                        </Link>
                         <span className='topbarIconBadge'>1</span>
                     </div>
                     <div className='topbarIconItem'>
@@ -47,7 +49,7 @@ const TopBar = () => {
                 <Link to={`/profile/${user.username}`}>
                     <img
                         src={user.profilePicture ?
-                            PF + user.profilePicture :
+                            user.profilePicture :
                             PF + 'person/noProfilePicture.jpg'}
                         alt='profilePicture'
                         className='topbarImg'

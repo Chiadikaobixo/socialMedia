@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/authContext'
 import { Link } from 'react-router-dom'
 import { Add, Remove } from '@mui/icons-material'
-import { userRequest } from '../../requestMethod'
+import { unAuthRequest, userRequest } from '../../requestMethod'
 
 const RightBar = ({ user }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
@@ -14,11 +14,10 @@ const RightBar = ({ user }) => {
     const [followed, setFollowed] = useState(false)
     const { dispatch } = useContext(AuthContext)
 
-   
     useEffect(() => {
         const getFriends = async () => {
             try {
-                const friendList = await userRequest.get(`/friends/${_id}`)
+                const friendList = await unAuthRequest.get(`/friends/${_id}`)
                 const { data } = friendList.data
                 setFriends(data)
             } catch (error) {
@@ -26,8 +25,8 @@ const RightBar = ({ user }) => {
             }
         }
         getFriends()
-    }, [])
-   
+    }, [_id])
+    
     useEffect(() => {
         setFollowed(followings.includes(user?._id))
     }, [followings, user?._id])
@@ -35,18 +34,16 @@ const RightBar = ({ user }) => {
     const handleClick = async () => {
         try {
             if (followed) {
-                await userRequest.put(`/users/${user._id}/unfollow`, { userId: _id })
+                await unAuthRequest.put(`/users/${user._id}/unfollow`, { userId: _id })
                 dispatch({ type: 'FOLLOW', payload: user._id })
             } else {
-                await userRequest.put(`/users/${user._id}/follow`, { userId: _id })
+                await unAuthRequest.put(`/users/${user._id}/follow`, { userId: _id })
                 dispatch({ type: 'UNFOLLOW', payload: user._id })
             }
         } catch (error) {
         }
         setFollowed(!followed)
     }
-
-
 
 
     const HomeRightBar = () => {

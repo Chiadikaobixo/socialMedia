@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { useState, useEffect } from 'react'
-import { MoreVert } from '@mui/icons-material'
+import { Delete, MoreVert } from '@mui/icons-material'
 import moment from "moment";
-import {userRequest, unAuthRequest} from '../../requestMethod.js'
-import { Link } from 'react-router-dom'
+import { userRequest, unAuthRequest } from '../../requestMethod.js'
+import { Link, useParams } from 'react-router-dom'
 import './post.css'
 import { AuthContext } from '../../context/authContext';
 
@@ -12,20 +12,32 @@ const Post = ({ post }) => {
     const [isLiked, setIsLike] = useState(false)
     const [user, setUser] = useState({})
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
-    const { user: { data: { login: { _id } } } } = useContext(AuthContext)
-
+    const { user: { data: { login: { _id, username: loggedinUsername } } } } = useContext(AuthContext)
+    const username = useParams().username
+  
+    
     useEffect(() => {
         setIsLike(post.likes.includes(_id))
     }, [post.likes, _id])
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await userRequest.get(`/?userId=${post.userId}`)
+            const res = await unAuthRequest.get(`/?userId=${post.userId}`)
             const { data: { data } } = res
             setUser(data)
         }
         fetchUser()
     }, [post.userId])
+
+    
+    // const handleClick = async () => {
+    //     try {
+    //        await unAuthRequest.delete(`/posts/${post._id}`, { userId: post.userId })
+    //         dispatch({ type: 'DELETE_POST', payload: post._id })
+    //     } catch (error) {
+
+    //     }
+    // }
 
     const likeHandler = async () => {
         try {
@@ -44,7 +56,7 @@ const Post = ({ post }) => {
                         <Link to={`/profile/${user.username}`}>
                             <img
                                 className='postProfileImg'
-                                src={user.profilePicture ?  user.profilePicture : PF + 'person/noProfilePicture.jpg'}
+                                src={user.profilePicture ? user.profilePicture : PF + 'person/noProfilePicture.jpg'}
                                 alt=''
                             />
                         </Link>
@@ -64,11 +76,13 @@ const Post = ({ post }) => {
                 <div className='postBottom'>
                     <div className='postBottomLeft'>
                         <img className='likeIcon' src={`${PF}like.png`} onClick={likeHandler} alt='' />
-                        <img className='likeIcon' src={`${PF}heart.png`} onClick={likeHandler} alt='' />
                         <span className='postLikeCounter'>{like} likes</span>
                     </div>
                     <div className='postBottomRight'>
                         <span className='postCommentText'>{post.comment} comments</span>
+                        <span className='postdelete'>
+                            {username === loggedinUsername && (<Delete />)}
+                        </span>
                     </div>
                 </div>
             </div>

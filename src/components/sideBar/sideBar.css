@@ -52,4 +52,10 @@
     padding: 0;
     margin: 0;
     list-style: none;
+    color: black;
   }
+
+.following{
+  margin-bottom: 15px;
+  align-items: center;
+}

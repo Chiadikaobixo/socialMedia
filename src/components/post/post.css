@@ -75,3 +75,9 @@
       cursor: pointer;
       font-size: 15px;
   }
+
+  .postdelete{
+    cursor: pointer;
+    margin-left: 10px;
+    color: rgb(82, 80, 80);
+  }

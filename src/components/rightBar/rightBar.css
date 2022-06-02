@@ -101,3 +101,7 @@
 .rightbarFollowButton:focus {
     outline: none;
 }
+
+.rightbarFollowingName{
+    color: black;
+}
