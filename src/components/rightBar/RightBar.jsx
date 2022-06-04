@@ -52,7 +52,7 @@ const RightBar = ({ user }) => {
                 <div className='birthdayContainer'>
                     <img className='birthdayImg' src='assets/gift.png' alt='' />
                     <span className='birthdayText'>
-                        <b>Chiadikaobi</b> and <b>3 other friends</b>  have their birthday today
+                        <b>Exclusive discount </b>when you shop at<b> Franchise store</b> from now using our promo code
                     </span>
                 </div>
                 <img className='rightbarAd' src='assets/advert.jpg' alt='' />

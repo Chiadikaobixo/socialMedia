@@ -2,7 +2,6 @@ import './sideBar.css'
 import {
     RssFeed,
     Chat,
-    PlayCircleFilledOutlined,
     Group,
 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
@@ -58,10 +57,6 @@ const SideBar = () => {
                             <Chat className="sidebarIcon" />
                             <span className="sidebarListItemText">Chats</span>
                         </Link>
-                    </li>
-                    <li className="sidebarListItem">
-                        <PlayCircleFilledOutlined className="sidebarIcon" />
-                        <span className="sidebarListItemText">Videos</span>
                     </li>
                     <li className="sidebarListItem">
                         <Link to='/explore' style={{ textDecoration: 'none', color: 'black' }}>

@@ -105,3 +105,9 @@
 .rightbarFollowingName{
     color: black;
 }
+
+@media screen and (max-width: 768px) {
+    .rightbar {
+      display: none;
+    }
+  }

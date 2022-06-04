@@ -59,3 +59,9 @@
   margin-bottom: 15px;
   align-items: center;
 }
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}

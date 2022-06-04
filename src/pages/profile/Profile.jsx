@@ -12,6 +12,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import app from '../../firebase'
 import { Modal } from 'react-bootstrap'
 import { Form, Button } from 'react-bootstrap'
+import Logout from '../../components/logout/Logout'
 
 const Profile = () => {
     const [user, setUser] = useState({})
@@ -116,6 +117,10 @@ const Profile = () => {
                             {username === loggedinUsername &&
                                 <button onClick={handleShow} className='shareButton' data-toggle='modal'>Edit profile</button>}
                         </div>
+                        <div>
+                            {username === loggedinUsername &&
+                                <Logout />}
+                        </div>
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{user.username}</h4>
                             <span className="profileInfoDesc">{user.desc}</span>
@@ -193,7 +198,6 @@ const Profile = () => {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
-                        <Button variant="primary" >Save changes</Button>
                     </Modal.Footer>
                 </Modal.Dialog>
             </Modal>

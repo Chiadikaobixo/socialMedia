@@ -14,8 +14,9 @@ const Post = ({ post }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
     const { user: { data: { login: { _id, username: loggedinUsername } } } } = useContext(AuthContext)
     const username = useParams().username
-  
+    const { dispatch } = useContext(AuthContext)
     
+
     useEffect(() => {
         setIsLike(post.likes.includes(_id))
     }, [post.likes, _id])
@@ -28,16 +29,6 @@ const Post = ({ post }) => {
         }
         fetchUser()
     }, [post.userId])
-
-    
-    // const handleClick = async () => {
-    //     try {
-    //        await unAuthRequest.delete(`/posts/${post._id}`, { userId: post.userId })
-    //         dispatch({ type: 'DELETE_POST', payload: post._id })
-    //     } catch (error) {
-
-    //     }
-    // }
 
     const likeHandler = async () => {
         try {
@@ -81,7 +72,7 @@ const Post = ({ post }) => {
                     <div className='postBottomRight'>
                         <span className='postCommentText'>{post.comment} comments</span>
                         <span className='postdelete'>
-                            {username === loggedinUsername && (<Delete />)}
+                            {username === loggedinUsername &&  (<Delete />)}
                         </span>
                     </div>
                 </div>

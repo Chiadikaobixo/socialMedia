@@ -67,7 +67,7 @@
   }
   
   .topbarIconItem {
-    margin-right: 15px;
+    margin-left: 50px;
     cursor: pointer;
     position: relative;
   }
@@ -93,4 +93,11 @@
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
+  }
+
+
+  @media screen and (max-width: 768px)  {
+    .searchInput{
+      display: none;
+    }
   }

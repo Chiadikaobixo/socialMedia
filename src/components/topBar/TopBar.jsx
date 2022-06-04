@@ -26,24 +26,11 @@ const TopBar = () => {
                 </div>
             </div>
             <div className='topbarRight'>
-                <div className='topbarLinks'>
-                    <span className='topbarLink'>Homepage</span>
-                    <span className='topbarLink'>TimeLine</span>
-                </div>
                 <div className='topbarIcons'>
-                    <div className='topbarIconItem'>
-                        <Person />
-                        <span className='topbarIconBadge'>1</span>
-                    </div>
                     <div className='topbarIconItem'>
                         <Link to='/messenger' style={{ textDecoration: 'none', color: 'white' }}>
                             <Chat />
                         </Link>
-                        <span className='topbarIconBadge'>1</span>
-                    </div>
-                    <div className='topbarIconItem'>
-                        <Notifications />
-                        <span className='topbarIconBadge'>1</span>
                     </div>
                 </div>
                 <Link to={`/profile/${user.username}`}>
