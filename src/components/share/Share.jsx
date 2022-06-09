@@ -49,8 +49,8 @@ const Share = () => {
                         newPost.img = product
 
                         try {
-                            await post("https://chiadi-socialmedia-api.herokuapp.com/avatar", data);
-                            await post("https://chiadi-socialmedia-api.herokuapp.com/posts", newPost)
+                            await unAuthRequest.post("/avatar", data);
+                            await unAuthRequest.post("/posts", newPost)
                             window.location.reload()
                         } catch (err) {
 
