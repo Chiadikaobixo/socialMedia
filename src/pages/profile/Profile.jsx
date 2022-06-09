@@ -32,7 +32,7 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await unAuthRequest.get(`user?username=${username}`)
+            const res = await unAuthRequest.get(`/user?username=${username}`)
             const { data: { data } } = res
             setUser(data)
             setCity(data.city)
@@ -40,7 +40,7 @@ const Profile = () => {
             setRelationship(data.relationship)
         }
         fetchUser()
-    }, [])
+    }, [username])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
