@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react'
-import { PermMedia, Label, Room, EmojiEmotions, Cancel } from '@mui/icons-material'
+import { PermMedia, Room, Cancel } from '@mui/icons-material'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import app from '../../firebase'
 import { AuthContext } from '../../context/authContext'
