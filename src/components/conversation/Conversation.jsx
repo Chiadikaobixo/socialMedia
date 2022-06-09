@@ -13,7 +13,7 @@ const Conversation = ({ conversation, currentUser }) => {
 
         const getUser = async () => {
             try {
-                const res = await userRequest.get(`/?userId=${friendId}`)
+                const res = await userRequest.get(`/user?userId=${friendId}`)
                 const { data } = res.data
                 setUser(data)
             } catch (error) {

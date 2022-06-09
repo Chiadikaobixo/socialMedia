@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { loginCall } from '../../apiCalls'
 import { AuthContext } from '../../context/authContext'
 import { CircularProgress } from '@mui/material'
+import { Link } from 'react-router-dom'
 import './login.css'
 
 const Login = () => {
@@ -46,8 +47,10 @@ const Login = () => {
                             {isFetching ? <CircularProgress size="20px" /> : "LogIn"}
                         </button>
                         <span className='loginForgot'>Forgot Password?</span>
+                        <Link to='/register'>
                         <button className='loginRegisterButton'>Create a New Account</button>
-                    </form>
+                        </Link>
+                        </form>
                 </div>
             </div>
         </div>

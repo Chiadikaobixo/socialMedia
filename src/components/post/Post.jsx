@@ -23,7 +23,7 @@ const Post = ({ post }) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await unAuthRequest.get(`/?userId=${post.userId}`)
+            const res = await unAuthRequest.get(`/user?userId=${post.userId}`)
             const { data: { data } } = res
             setUser(data)
         }

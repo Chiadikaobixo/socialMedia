@@ -10,7 +10,7 @@ const Message = ({message, own}) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await userRequest.get(`/?userId=${id}`)
+            const res = await userRequest.get(`/user?userId=${id}`)
             const {data: {data}} = res
             setUser(data)
         }

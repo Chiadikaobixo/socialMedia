@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Person, Chat, Notifications } from '@mui/icons-material'
+import { Search, Chat } from '@mui/icons-material'
 import { AuthContext } from '../../context/authContext'
 import './topBar.css'
 
@@ -18,6 +18,9 @@ const TopBar = () => {
                         SocialMedia
                     </span>
                 </Link>
+            </div>
+            <div className='xoxo'>
+                <span className='xoxoxo'>X'O</span>
             </div>
             <div className='topbarCenter'>
                 <div className='searchbar'>

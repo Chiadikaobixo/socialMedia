@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API = "http://localhost:8080"
+const API = "https://chiadi-socialmedia-api.herokuapp.com"
 let token = ''
 
 if (localStorage.getItem("user")) {
