@@ -40,7 +40,7 @@ const Profile = () => {
             setRelationship(data.relationship)
         }
         fetchUser()
-    }, [username])
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
