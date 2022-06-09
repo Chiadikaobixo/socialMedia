@@ -55,7 +55,7 @@ const RightBar = ({ user }) => {
                         <b>Exclusive discount </b>when you shop at<b> Franchise store</b> from now using our promo code
                     </span>
                 </div>
-                <img className='rightbarAd' src={PF + 'advert.jpg'} alt='' />
+                <img className='rightbarAd' src={PF + 'advert.JPG'} alt='' />
                 <h4 className='rightbarTitle'>Online friends</h4>
                 <ul className='rightbarFriendList'>
                     {Users.map((user) => (
