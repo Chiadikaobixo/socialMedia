@@ -74,7 +74,7 @@ const Profile = () => {
                     editUser.profilePicture = product
 
                     try {
-                        await unAuthRequest.post("/avatar", data)
+                        await unAuthRequest.post(`/avatar`, data)
                         await unAuthRequest.patch(`/users/${_id}`, editUser);
                         await unAuthRequest.patch(`/users/${_id}`, editUserDetails);
                         window.location.reload()
