@@ -99,7 +99,7 @@ const Profile = () => {
                         <div className="profileCover">
                             <img
                                 className="profileCoverImg"
-                                src={user.coverPicture ? user.coverPicture : `${PF}person/noCover.jpg`}
+                                src={user.coverPicture ? user.coverPicture : PF + 'person/noCover.jpg'}
                                 alt=""
                             />
                             <img

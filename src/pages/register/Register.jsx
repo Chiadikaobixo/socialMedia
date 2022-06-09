@@ -36,7 +36,7 @@ const Register = () => {
         <div className='login'>
             <div className='loginWrapper'>
                 <div className='loginLeft'>
-                    <h3 className='loginLogo'>SocialMedia</h3>
+                    <h3 className='loginLogo'>ChiadiMedia</h3>
                     <span className='loginDesc'>
                         We keep you Connected with your Loved ones
                     </span>

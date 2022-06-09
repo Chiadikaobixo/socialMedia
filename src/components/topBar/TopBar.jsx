@@ -15,12 +15,12 @@ const TopBar = () => {
             <div className='topbarLeft'>
                 <Link to='/' style={{ textDecoration: 'none' }}>
                     <span className='logo'>
-                        SocialMedia
+                        ChiadiMedia
                     </span>
                 </Link>
             </div>
             <div className='xoxo'>
-                <span className='xoxoxo'>X'O</span>
+                <span className='xoxoxo'>Chiadi</span>
             </div>
             <div className='topbarCenter'>
                 <div className='searchbar'>
