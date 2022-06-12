@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/authContext'
 import { Link } from 'react-router-dom'
 import { Add, Remove } from '@mui/icons-material'
-import { unAuthRequest, userRequest } from '../../requestMethod'
+import { unAuthRequest } from '../../requestMethod'
 
 const RightBar = ({ user }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
@@ -13,6 +13,7 @@ const RightBar = ({ user }) => {
     const { user: { data: { login: { _id, followings, username: loggedinUsername } } } } = useContext(AuthContext)
     const [followed, setFollowed] = useState(false)
     const { dispatch } = useContext(AuthContext)
+
 
     useEffect(() => {
         const getFriends = async () => {
@@ -26,7 +27,7 @@ const RightBar = ({ user }) => {
         }
         getFriends()
     }, [_id])
-    
+
     useEffect(() => {
         setFollowed(followings.includes(user?._id))
     }, [followings, user?._id])
@@ -88,11 +89,7 @@ const RightBar = ({ user }) => {
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">Relationship:</span>
                         <span className="rightbarInfoValue">
-                            {
-                                user.relationship === 1 ? "Single"
-                                    : user.relationship === 2 ? "Married"
-                                        : "-"
-                            }
+                            {user.relationship}
                         </span>
                     </div>
                 </div>

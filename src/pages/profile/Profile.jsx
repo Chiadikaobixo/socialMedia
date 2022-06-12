@@ -13,6 +13,8 @@ import app from '../../firebase'
 import { Modal } from 'react-bootstrap'
 import { Form, Button } from 'react-bootstrap'
 import Logout from '../../components/logout/Logout'
+import { useHistory } from 'react-router'
+
 
 const Profile = () => {
     const [user, setUser] = useState({})
@@ -20,16 +22,33 @@ const Profile = () => {
     const username = useParams().username
     const [file, setFile] = useState(null)
     const { user: { data: { login: { _id, username: loggedinUsername } } } } = useContext(AuthContext)
-
+    const [conversations, setConversations] = useState([])
     const [show, setShow] = useState(false)
     const [city, setCity] = useState()
     const [from, setFrom] = useState()
     const [relationship, setRelationship] = useState()
 
+
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
+    
+    useEffect(() => {
+        const getConversation = async () => {
+            try {
+                const res = await unAuthRequest.get(`/conversations/${_id}`)
+                const { data } = res.data
+                setConversations(data)
+            } catch (error) {
 
-
+            }
+        }
+        getConversation()
+    }, [_id])
+    
+    let alreadyMessaged = conversations.map(
+        (conversation) => conversation.members.includes(_id && user._id)
+    )
+    
     useEffect(() => {
         const fetchUser = async () => {
             const res = await unAuthRequest.get(`/user?username=${username}`)
@@ -89,6 +108,27 @@ const Profile = () => {
         }
     }
 
+    let history = useHistory();
+
+    const handleClick = async (e) => {
+        e.preventDefault()
+        const createConversation = {
+            senderId: _id,
+            receiverId: user._id
+        }
+        try {
+            await unAuthRequest.post(`/conversations`, createConversation)
+            history.push(`/messenger`)
+        } catch (error) {
+
+        }
+    }
+    
+    const myClick = async (e) => {
+        e.preventDefault()
+        history.push(`/messenger`)
+    }
+
     return (
         <div>
             <TopBar />
@@ -121,6 +161,9 @@ const Profile = () => {
                             {username === loggedinUsername &&
                                 <Logout />}
                         </div>
+                        <div>{user.username !== loggedinUsername ?(alreadyMessaged.includes(true) ? (<button onClick={myClick} className='shareButton'>DM</button>) :
+                            (<button onClick={handleClick} className='shareButton'>DM</button>)
+                        ): ''}</div>
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{user.username}</h4>
                             <span className="profileInfoDesc">{user.desc}</span>
