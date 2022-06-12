@@ -21,7 +21,7 @@ const Messenger = () => {
     const { user: { data: { login: user } } } = useContext(AuthContext)
 
     useEffect(() => {
-        socket.current = io("ws://chiadikaobi-media-socket.herokuapp.com")
+        socket.current = io("https://chiadikaobi-media-socket.herokuapp.com")
         socket.current.on('getMessage', (data) => {
            setArrivalMessage({
                sender: data.senderId,
