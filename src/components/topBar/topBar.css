@@ -94,25 +94,3 @@
   object-fit: cover;
   cursor: pointer;
 }
-
-@media screen and (max-width: 768px) {
-  .topbarLeft {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .xoxo {
-    flex: 3;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .xoxoxo {
-    font-size: 24px;
-    margin-left: 20px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-  }
-}

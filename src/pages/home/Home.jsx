@@ -4,12 +4,13 @@ import Feed from "../../components/feed/Feed"
 import './home.css'
 import RightBar from "../../components/rightBar/RightBar"
 
+
 const Home = () => {
     return (
         <div>
-            <TopBar />
+            <TopBar/>
             <div className="homeContainer">
-                <SideBar />
+                <SideBar/>
                 <Feed />
                 <RightBar />
             </div>
