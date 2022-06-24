@@ -149,7 +149,7 @@
 @media screen and (max-width: 768px) {
   .xoxoxo {
     font-size: 24px;
-    margin-left: 20px;
+    margin-left: 1px;
     font-weight: bold;
     color: rgb(4, 4, 77);
     cursor: pointer;
