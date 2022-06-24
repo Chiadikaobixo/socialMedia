@@ -124,6 +124,71 @@ const SideBar = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="sidebarr">
+                {showProfile && 
+                    <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit={{ x: "-100vw", transition: { ease: 'easeInOut' } }}
+                    variants={Loadvariants}>
+                    <div className="sidebarWrapperr">
+                        <AiOutlineClose
+                            className="sidebar__close"
+                            onClick={() => setShowProfile(false)}
+                        />
+                        <ul className="sidebarListt">
+                            <li className="sidebarListItemm">
+                                <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+                                    <RssFeed className="sidebarIconn" />
+                                    <span className="sidebarListItemTextt">Feed</span>
+                                </Link>
+                            </li>
+                            <li className="sidebarListItemm">
+                                <Link to='/messenger' style={{ textDecoration: 'none', color: 'black' }}>
+                                    <Chat className="sidebarIconn" />
+                                    <span className="sidebarListItemTextt">Chats</span>
+                                </Link>
+                            </li>
+                            <li className="sidebarListItemm">
+                                <Link to='/explore' style={{ textDecoration: 'none', color: 'black' }}>
+                                    <Group className="sidebarIconn" />
+                                    <span className="sidebarListItemTextt">Explore Users</span>
+                                </Link>
+                            </li>
+
+                        </ul>
+                        <button className="sidebarButtonn">Show More</button>
+                        <hr className="sidebarHrr" />
+                        <div>
+                            <div>
+                                <div>
+                                    <h3 className='followingg'>Following</h3>
+                                </div>
+                                <ul className="sidebarFriendListt">
+                                    {friends.map((friend) => (
+                                        <Link to={"/profile/" + friend.username} key={friend._id} style={{ textDecoration: 'none' }}>
+                                            <CloseFriends key={friend.id} user={friend} />
+                                        </Link>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div>
+                                <div>
+                                    <h3 className='followingg'>Followers</h3>
+                                </div>
+                                <ul className="sidebarFriendListt">
+                                    {followers.map((follower) => (
+                                        <Link to={"/profile/" + follower.username} key={follower._id} style={{ textDecoration: 'none' }}>
+                                            <CloseFriends key={follower.id} user={follower} />
+                                        </Link>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>}
+            </div>
         </div >
     );
 }
